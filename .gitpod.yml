@@ -1,10 +1,10 @@
-image:
-  file: .gitpod/.gitpod.Dockerfile
+image: devwithlando/gitpod:1
 
 tasks:
   - name: Start Drupal
     command: |
       lando start
+      gp preview $(gp url $(lando info --format=json | jq -r ".[0].urls[1]" | sed -e 's#http://localhost:\(\)#\1#'))
 
 ports:
   - port: 3306
