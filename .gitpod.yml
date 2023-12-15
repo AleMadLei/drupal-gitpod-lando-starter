@@ -1,6 +1,23 @@
-image: devwithlando/gitpod:1
+image:
+    file: .gitpod.Dockerfile
 
 tasks:
   - name: Start Drupal
     command: |
       lando start
+
+ports:
+  - port: 3306
+    onOpen: ignore
+  - port: 8080
+    onOpen: ignore
+  - port: 8443
+    onOpen: ignore
+  - port: 9003
+    onOpen: ignore
+  - port: 80
+    onOpen: ignore
+  - port: 443
+    onOpen: ignore
+
+
