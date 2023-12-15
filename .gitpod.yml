@@ -1,23 +1,41 @@
 image: devwithlando/gitpod:1
 
 tasks:
-  - name: Start Drupal
-    command: |
+  - name: Setup Drupal Dev Env
+    init: |
       lando start
-      gp preview $(gp url $(lando info --format=json | jq -r ".[0].urls[1]" | sed -e 's#http://localhost:\(\)#\1#'))
-
+      chmod ug+w -R /workspace/drupal-dev-environment/sites/default/
+    command: |
+      # start a rebuild  with actual networking service (prebuild uses different)
+      lando rebuild -y
+      gp preview $(gp url $(lando info --format=json | jq -r ".[0].urls[0]" | sed -e 's#http://localhost:\(\)#\1#'))
 ports:
   - port: 3306
-    onOpen: ignore
-  - port: 8080
-    onOpen: ignore
-  - port: 8443
-    onOpen: ignore
-  - port: 9003
     onOpen: ignore
   - port: 80
     onOpen: ignore
   - port: 443
     onOpen: ignore
 
+github:
+  prebuilds:
+    master: true
+    branches: true
+    pullRequests: true
+    pullRequestsFromForks: true
+    addCheck: true
+    addComment: false
+    addBadge: true
 
+vscode:
+  extensions:
+    - felixfbecker.php-debug
+    - dbaeumer.vscode-eslint
+    - eamodio.gitlens
+    - EditorConfig.EditorConfig
+    - esbenp.prettier-vscode
+    - stylelint.vscode-stylelint
+    - tombonnike.vscode-status-bar-format-toggle
+    - usernamehw.errorlens
+    - mblode.twig-language
+    - skippednote.VS-code-drupal
