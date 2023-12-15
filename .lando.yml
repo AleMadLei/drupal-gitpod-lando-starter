@@ -1,0 +1,11 @@
+name: starter
+recipe: drupa10
+config:
+  php: '8.2'
+  webroot: web
+
+services:
+  mailhog:
+    type: mailhog
+    hogfrom:
+      - appserver

@@ -1,0 +1,6 @@
+image: devwithlando/gitpod:1
+
+tasks:
+  - name: Start Drupal
+    command: |
+      lando start
